@@ -40,6 +40,13 @@
   max-width: 80px;
 }
 
+.form input[type="file"] {
+  min-width: 160px;
+  max-width: 160px;
+  border: none;
+  padding: 0;
+}
+
 .form input[type="checkbox"] {
   min-width: 20px;
   max-width: 20px;

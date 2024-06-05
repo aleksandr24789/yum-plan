@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { useStateContext } from '@/providers/stateContext'
 import { z } from 'zod'
+import { toBase64 } from '@/utils/toBase64'
 import UserAvatar from '@/components/UserAvatar/UserAvatar'
 import FormButton from '@/components/FormButton/FormButton'
 import styles from './SetUserForm.module.css'
@@ -13,15 +14,6 @@ export default function SetUserForm() {
   const [nameError, setNameError] = useState(false)
   const { user, setUser } = useStateContext()
   if (!user) return null
-  
-  const toBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = () => resolve(reader.result)
-      reader.onerror = (error) => reject(error)
-    })
-  }
 
   const onChangeAvatar = (e) => {
     setSelectedAvatar(e.target.files[0])
