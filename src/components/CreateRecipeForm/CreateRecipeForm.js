@@ -93,7 +93,7 @@ export default function CreateRecipeForm() {
       >
         Изображение
       </label>
-      <RecipeImage />
+      <RecipeImage onChange={setFormValues} />
       <label
         htmlFor="duration"
       >
