@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { useStateContext } from '@/providers/stateContext'
 import { z } from 'zod'
-import { toBase64 } from '@/utils/toBase64'
+import { toBase64 } from '@/helpers/images'
 import UserAvatar from '@/components/UserAvatar/UserAvatar'
 import FormButton from '@/components/FormButton/FormButton'
 import styles from './SetUserForm.module.css'
