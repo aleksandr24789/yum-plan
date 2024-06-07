@@ -27,7 +27,7 @@ export default function Signin({ providers }) {
             {Object.values(providers).map((provider) => (
               <LoginWithButton
                 key={provider.name}
-                onClick={() => signIn(provider.id)}
+                onClick={() => signIn(provider.id, { callbackUrl: '/' })}
                 providerType={provider.name}
               />
             ))}
