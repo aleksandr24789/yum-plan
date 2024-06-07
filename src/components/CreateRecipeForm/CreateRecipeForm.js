@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { z } from 'zod'
+import RecipeImage from '@/components/RecipeImage/RecipeImage'
 import FormButton from '@/components/FormButton/FormButton'
 import styles from './CreateRecipeForm.module.css'
 
@@ -92,11 +93,7 @@ export default function CreateRecipeForm() {
       >
         Изображение
       </label>
-      {/* TO DO: Replace with custom picture component (tobase64) */}
-      <input
-        type="file"
-        name="picture"
-      />
+      <RecipeImage onChange={setFormValues} />
       <label
         htmlFor="duration"
       >

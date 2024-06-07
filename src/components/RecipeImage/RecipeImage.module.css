@@ -1,0 +1,71 @@
+.container {
+	height: 150px;
+	padding: 10px 0;
+	display: grid;
+	grid-template-columns: 130px auto;
+	gap: 30px;
+}
+
+.picture {
+	grid-column: 1 / 1;
+	border: 1px solid var(--brand-color-4);
+	border-radius: 5%;
+}
+
+.upload {
+	grid-column: 2 / 2;
+	justify-self: end;
+	width: 160px;
+  height: 40px;
+  color: transparent;
+  outline: none;
+}
+
+.upload::file-selector-button {
+  width: 160px;
+  height: 40px;
+  cursor: pointer;
+	outline: none;
+	font-size: 1rem;
+	vertical-align: middle;
+	color: rgb(255 255 255);
+	text-align: center;
+	border-radius: 4px;
+	border: none;
+  background-color: var(--brand-color-4);
+	padding: 10px 5px;
+}
+
+.upload:focus-visible {
+  box-shadow: 0 0 0 3px var(--brand-color-2);
+}
+
+.loader {
+  position: relative;
+  background-color: var(--brand-color-4);
+  border-radius: 5%;
+  transition: all 0.5s ease;
+}
+
+.loader::after {
+  content: "";
+  position: absolute;
+  width: 77px;
+  height: 77px;
+  inset: 0;
+  margin: auto;
+  border: 10px solid transparent;
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spinner 1s ease infinite;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0turn);
+  }
+
+  to {
+    transform: rotate(1turn);
+  }
+}
