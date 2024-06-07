@@ -5,29 +5,37 @@ import { toBase64, resizeImage } from '@/helpers/images'
 import styles from './RecipeImage.module.css'
 
 export default function RecipeImage(props) {
-  const [picture, setPicture] = useState()
+  const [picture, setPicture] = useState(null)
+  const [loader, setLoader] = useState(false)
 
   const onChangePicture = async (e) => {
-    const file = await toBase64(e.target.files[0])
-    const newPicture = resizeImage(file, 130, 130)
-    setPicture(newPicture)
-    props.onChange(prev => ({
-      ...prev,
-      picture
-    }))
+    setLoader(true)
+    try {
+      const file = await toBase64(e.target.files[0])
+      const newPicture = await resizeImage(file, 130, 130)
+      setPicture(newPicture)
+      props.onChange(prev => ({
+        ...prev,
+        picture
+      }))
+    } catch(error) {
+      console.error(error)
+    }
+    setLoader(false)
   }
 
   return (
     <div className={styles.container}>
-      <NextImage
+      {!loader && <NextImage
         unoptimized
-        loader={() => picture ? picture : defaultPicture}
-        src={picture ? picture : defaultPicture}
+        loader={() => picture ?? defaultPicture}  
+        src={picture ?? defaultPicture}
         alt="Recipe Image"
         width={130}
         height={130}
         className={styles.picture}
-      />
+      />}
+      {loader && <div className={styles.loader}></div>}
       <input
         type="file"
         name="recipeimg"
