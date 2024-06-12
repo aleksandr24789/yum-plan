@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { z } from 'zod'
 import RecipeImage from '@/components/RecipeImage/RecipeImage'
+import IngredientsSelector from '@/components/IngredientsSelector/IngredientsSelector'
 import FormButton from '@/components/FormButton/FormButton'
 import styles from './CreateRecipeForm.module.css'
 
@@ -118,20 +119,10 @@ export default function CreateRecipeForm() {
       >
         Ингредиенты
       </label>
-      <select
-        name="ingredients"
-        multiple
-        onChange={(e) => setFormValues(prev => ({
-          ...prev,
-          ingredients: Array.from(e.target.selectedOptions)
-                      .map(option => option.text)
-        }))}
-      >
-        {/* TO DO: Get options from database */}
-        <option value={'val1'}>1 морковка</option>
-        <option value={'val2'}>2 капуста</option>
-        <option value={'val3'}>3 свекла</option>
-      </select>
+      <div className={styles.ingredients}>
+        <IngredientsSelector/>
+        <button className={styles.more}>Ещё</button>
+      </div>
       <label
         htmlFor="public"
       >

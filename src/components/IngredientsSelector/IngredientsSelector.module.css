@@ -1,0 +1,17 @@
+.container {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+}
+
+.selector {
+  flex-basis: 70%;
+}
+
+.amount {
+  flex-basis: 30%;
+}
+
+.text {
+  color: var(--primary-text-color);
+}
