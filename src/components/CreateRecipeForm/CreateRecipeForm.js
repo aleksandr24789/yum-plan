@@ -3,6 +3,7 @@ import { z } from 'zod'
 import RecipeImage from '@/components/RecipeImage/RecipeImage'
 import IngredientsSelector from '@/components/IngredientsSelector/IngredientsSelector'
 import FormButton from '@/components/FormButton/FormButton'
+import cl from 'classnames'
 import styles from './CreateRecipeForm.module.css'
 
 export default function CreateRecipeForm() {
@@ -27,7 +28,7 @@ export default function CreateRecipeForm() {
 
     const result = z.object({
       name: z.string()
-        .min(1, 'Название должно содержать не менее одного символа')
+        .min(2, 'Название должно содержать не менее двух символов')
         .max(50, 'Название должно содержать не более 50 символов')
       ,
       duration: z.number()
@@ -60,6 +61,7 @@ export default function CreateRecipeForm() {
     >
       <label
         htmlFor="name"
+        className={styles.label}
       >
         Название
       </label>
@@ -72,11 +74,12 @@ export default function CreateRecipeForm() {
           ...prev,
           name: e.target.value
         }))}
-        className={formErrors?.name && styles.error}
+        className={cl(styles.input, formErrors?.name && styles.error)}
       />
-      <span>{formErrors?.name}</span>
+      <span className={styles.hint}>{formErrors?.name}</span>
       <label
         htmlFor="description"
+        className={styles.label}
       >
         Описание
       </label>
@@ -88,15 +91,18 @@ export default function CreateRecipeForm() {
           ...prev,
           description: e.target.value
         }))}
+        className={styles.textarea}
       />
       <label
         htmlFor="picture"
+        className={styles.label}
       >
         Изображение
       </label>
       <RecipeImage onChange={setFormValues} />
       <label
         htmlFor="duration"
+        className={styles.label}
       >
         Время (минуты)
       </label>
@@ -111,11 +117,14 @@ export default function CreateRecipeForm() {
           ...prev,
           duration: Number(e.target.value)
         }))}
-        className={formErrors?.duration && styles.error}
+        className={cl(styles.input,
+          styles.number,
+          formErrors?.duration && styles.error)}
       />
-      <span>{formErrors?.duration}</span>
+      <span className={styles.hint}>{formErrors?.duration}</span>
       <label
         htmlFor="ingredients"
+        className={styles.label}
       >
         Ингредиенты
       </label>
@@ -125,6 +134,7 @@ export default function CreateRecipeForm() {
       </div>
       <label
         htmlFor="public"
+        className={styles.label}
       >
         Доступен для всех
       </label>
@@ -135,10 +145,12 @@ export default function CreateRecipeForm() {
           ...prev,
           public: e.target.checked
         }))}
+        className={cl(styles.input, styles.checkbox)}
       />
       <FormButton
         caption="Добавить"
         loading={buttonLoading}
+        className={styles.submit}
       />       
     </form>
   )
