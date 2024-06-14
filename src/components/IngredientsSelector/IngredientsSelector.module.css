@@ -8,6 +8,70 @@
   flex-basis: 70%;
 }
 
+.dropdown {
+  position: relative;
+}
+
+.arrow {
+  position: absolute;
+  right: 10px;
+  top: 14px;
+  content: " ";
+  display: block;
+  width: 0;
+  height: 0;
+  margin-top: 5px;
+  border-color: var(--brand-color-4) transparent transparent;
+  border-style: solid;
+  border-width: 5px 5px 0;
+}
+
+.arrow.open {
+  border-color: transparent transparent var(--brand-color-4);
+  border-width: 0 5px 5px;
+}
+
+/* .control {
+
+}
+
+.value {
+
+} */
+
+.input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 52px 8px 10px;
+  line-height: 1.5;
+  font-size: 1rem;
+  outline: none;
+  transition: all 200ms ease;
+}
+
+.options {
+  display: none;
+  z-index: 1000;
+  position: absolute;
+  box-sizing: border-box;
+  top: 100%;
+  width: 100%;
+  margin-top: -1px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.options.open {
+  display: block;
+}
+
+.dropdown.option {
+  display: block;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
 .amount {
   flex-basis: 30%;
 }

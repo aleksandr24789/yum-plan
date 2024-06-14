@@ -1,4 +1,5 @@
 // import { ingredients } from './ingredients'
+import cl from 'classnames'
 import styles from './IngredientsSelector.module.css'
 
 export default function IngredientsSelector() {
@@ -6,7 +7,17 @@ export default function IngredientsSelector() {
   return (
     <div className={styles.container}>
       <div className={styles.selector}>
-
+        <div className={styles.dropdown}>
+          <div className={styles.control}>
+            <div className={styles.value}>
+              <input className={styles.input}/>
+            </div>
+          </div>
+          <div className={cl(styles.arrow, styles.open)}></div>
+        </div>
+        <div className={styles.options}>
+          <div className={styles.option}></div>
+        </div>
       </div>
       <div className={styles.amount}>
         <input
