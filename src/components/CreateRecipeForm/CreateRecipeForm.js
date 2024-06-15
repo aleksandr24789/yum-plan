@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { z } from 'zod'
+import { ingredients } from '@/data/ingredients'
 import RecipeImage from '@/components/RecipeImage/RecipeImage'
 import IngredientsSelector from '@/components/IngredientsSelector/IngredientsSelector'
 import FormButton from '@/components/FormButton/FormButton'
@@ -129,7 +130,11 @@ export default function CreateRecipeForm() {
         Ингредиенты
       </label>
       <div className={styles.ingredients}>
-        <IngredientsSelector/>
+        <IngredientsSelector
+          options={ingredients}
+          // selectedVal={formValues.ingredients}
+          handleChange={setFormValues}
+        />
         <button className={styles.more}>Ещё</button>
       </div>
       <label
