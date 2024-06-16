@@ -135,7 +135,7 @@ export default function CreateRecipeForm() {
           // selectedVal={formValues.ingredients}
           handleChange={setFormValues}
         />
-        <button className={styles.more}>Ещё</button>
+        <button className={styles.more}>Добавить ингредиент</button>
       </div>
       <label
         htmlFor="public"
