@@ -14,7 +14,7 @@
 
 .upload {
 	grid-column: 2 / 2;
-	justify-self: end;
+	justify-self: start;
 	width: 160px;
   height: 40px;
   color: transparent;

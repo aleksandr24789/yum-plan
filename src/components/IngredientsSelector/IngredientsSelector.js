@@ -5,7 +5,6 @@ import styles from './IngredientsSelector.module.css'
 export default function IngredientsSelector({
   options,
   handleChange,
-  handleDelete,
   index
 }) {
   const [query, setQuery] = useState('')
@@ -28,10 +27,7 @@ export default function IngredientsSelector({
   const selectOption = (option) => {
     setQuery('')
     setSelectedVal(option)
-    handleChange(prev => ({
-      ...prev,
-      ingredients: { name: option, amount: amount }
-    }))
+    handleChange(prev => prev.map((ing, i) => i === index ? { name: option, amount: amount } : ing))
     setIsOpen((isOpen) => !isOpen)
   }
 
@@ -92,15 +88,19 @@ export default function IngredientsSelector({
           required
           name="amount"
           className={styles.number}
-          onChange={(e) => setAmount(Number(e.target.value))}
+          onChange={(e) => {
+            setAmount(Number(e.target.value))
+            handleChange(prev => prev.map((ing, i) => i === index ? { name: ing.name, amount: amount } : ing))
+          }}
         />
         <span className={styles.text}>грамм</span>
       </div>
       <div className={styles.delete}>
         {index !== 0 && <button
           type="button"
+          title="Удалить ингредиент"
           className={styles.button}
-          onClick={() => handleDelete((prev) => {
+          onClick={() => handleChange((prev) => {
             return prev.filter((item, i) => i !== index)
           })}
         />}

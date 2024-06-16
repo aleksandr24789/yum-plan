@@ -136,8 +136,7 @@ export default function CreateRecipeForm() {
         {ingredientFields.map((ingredient) => (
           <IngredientsSelector
           options={ingredients}
-          // handleChange={}
-          handleDelete={setIngredientFields}
+          handleChange={setIngredientFields}
           key={ingredientFields.indexOf(ingredient)}
           index={ingredientFields.indexOf(ingredient)}
           />
