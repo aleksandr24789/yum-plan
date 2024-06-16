@@ -2,13 +2,16 @@ import { useState, useRef, useEffect } from 'react'
 import cl from 'classnames'
 import styles from './IngredientsSelector.module.css'
 
-export default function IngredientsSelector(
-  { options,
-    handleChange }
-) {
+export default function IngredientsSelector({
+  options,
+  handleChange,
+  handleDelete,
+  index
+}) {
   const [query, setQuery] = useState('')
-  const [selectedVal, setSelectedVal] = useState(null)
   const [isOpen, setIsOpen] = useState(false)
+  const [selectedVal, setSelectedVal] = useState(null)
+  const [amount, setAmount] = useState(0)
   const inputRef = useRef(null)
 
   useEffect(() => {
@@ -27,7 +30,7 @@ export default function IngredientsSelector(
     setSelectedVal(option)
     handleChange(prev => ({
       ...prev,
-      ingredients: option
+      ingredients: { name: option, amount: amount }
     }))
     setIsOpen((isOpen) => !isOpen)
   }
@@ -52,6 +55,7 @@ export default function IngredientsSelector(
             ref={inputRef}
             className={styles.input}
             value={getDisplayValue()}
+            placeholder="Введите название или выберите из списка"
             name="searchTerm"
             onChange={(e) => {
               setQuery(e.target.value)
@@ -88,8 +92,18 @@ export default function IngredientsSelector(
           required
           name="amount"
           className={styles.number}
+          onChange={(e) => setAmount(Number(e.target.value))}
         />
         <span className={styles.text}>грамм</span>
+      </div>
+      <div className={styles.delete}>
+        {index !== 0 && <button
+          type="button"
+          className={styles.button}
+          onClick={() => handleDelete((prev) => {
+            return prev.filter((item, i) => i !== index)
+          })}
+        />}
       </div>
     </div>
   )

@@ -17,6 +17,9 @@ export default function CreateRecipeForm() {
     ingredients: [],
     public: false,
   })
+  const [ingredientFields, setIngredientFields] = useState([
+    {name: null, amount: null}
+  ])
   const [formErrors, setFormErrors] = useState()
 
   const onSubmit = async (e) => {
@@ -130,12 +133,27 @@ export default function CreateRecipeForm() {
         Ингредиенты
       </label>
       <div className={styles.ingredients}>
-        <IngredientsSelector
+        {ingredientFields.map((ingredient) => (
+          <IngredientsSelector
           options={ingredients}
-          // selectedVal={formValues.ingredients}
-          handleChange={setFormValues}
-        />
-        <button className={styles.more}>Добавить ингредиент</button>
+          // handleChange={}
+          handleDelete={setIngredientFields}
+          key={ingredientFields.indexOf(ingredient)}
+          index={ingredientFields.indexOf(ingredient)}
+          />
+        ))}
+        <button
+          type="button"
+          className={styles.more}
+          onClick={() => {
+            setIngredientFields((prev) => [
+              ...prev,
+              { name: null, amount: null }
+            ])
+          }}
+        >
+          Добавить ингредиент
+        </button>
       </div>
       <label
         htmlFor="public"

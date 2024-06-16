@@ -2,11 +2,11 @@
   height: 50px;
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 10px;
 }
 
 .selector {
-  flex-basis: 75%;
+  flex-basis: 70%;
   position: relative;
 }
 
@@ -96,4 +96,20 @@
 
 .text {
   color: var(--primary-text-color);
+}
+
+.delete {
+  flex-basis: 5%;
+  place-content: center;
+}
+
+.button {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-image: url('/icons/delete.svg') center center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
