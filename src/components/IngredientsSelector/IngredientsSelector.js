@@ -27,7 +27,13 @@ export default function IngredientsSelector({
   const selectOption = (option) => {
     setQuery('')
     setSelectedVal(option)
-    handleChange(prev => prev.map((ing, i) => i === index ? { name: option, amount: amount } : ing))
+    handleChange(prev => ({
+      ...prev,
+      ingredients: [...prev.ingredients.map((ing, i) => {
+        if (i === index) return { name: option, amount: amount }
+        return ing
+      })]
+    }))
     setIsOpen((isOpen) => !isOpen)
   }
 
@@ -90,7 +96,13 @@ export default function IngredientsSelector({
           className={styles.number}
           onChange={(e) => {
             setAmount(Number(e.target.value))
-            handleChange(prev => prev.map((ing, i) => i === index ? { name: ing.name, amount: amount } : ing))
+            handleChange(prev => ({
+              ...prev,
+              ingredients: [...prev.ingredients.map((ing, i) => {
+                if (i === index) return { name: ing.name, amount: amount }
+                return ing
+              })]
+            }))
           }}
         />
         <span className={styles.text}>грамм</span>
@@ -100,9 +112,10 @@ export default function IngredientsSelector({
           type="button"
           title="Удалить ингредиент"
           className={styles.button}
-          onClick={() => handleChange((prev) => {
-            return prev.filter((item, i) => i !== index)
-          })}
+          onClick={() => handleChange(prev => ({
+            ...prev,
+            ingredients: [...prev.ingredients.filter((item, i) => i !== index)]
+          }))}
         />}
       </div>
     </div>

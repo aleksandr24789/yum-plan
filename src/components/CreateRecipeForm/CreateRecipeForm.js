@@ -14,12 +14,14 @@ export default function CreateRecipeForm() {
     description: null,
     picture: null,
     duration: null,
-    ingredients: [],
+    ingredients: [
+      {
+        name: null,
+        amount: null,
+      }
+    ],
     public: false,
   })
-  const [ingredientFields, setIngredientFields] = useState([
-    {name: null, amount: null}
-  ])
   const [formErrors, setFormErrors] = useState()
 
   const onSubmit = async (e) => {
@@ -133,23 +135,24 @@ export default function CreateRecipeForm() {
         Ингредиенты
       </label>
       <div className={styles.ingredients}>
-        {ingredientFields.map((ingredient) => (
+        {formValues.ingredients.map((ingredient) => (
           <IngredientsSelector
           options={ingredients}
-          handleChange={setIngredientFields}
-          key={ingredientFields.indexOf(ingredient)}
-          index={ingredientFields.indexOf(ingredient)}
+          handleChange={setFormValues}
+          key={formValues.ingredients.indexOf(ingredient)}
+          index={formValues.ingredients.indexOf(ingredient)}
           />
         ))}
         <button
           type="button"
           className={styles.more}
-          onClick={() => {
-            setIngredientFields((prev) => [
-              ...prev,
+          onClick={() => setFormValues((prev) => ({
+            ...prev,
+            ingredients: [
+              ...prev.ingredients,
               { name: null, amount: null }
-            ])
-          }}
+            ]
+          }))}
         >
           Добавить ингредиент
         </button>
