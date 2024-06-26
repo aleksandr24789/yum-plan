@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { z } from 'zod'
 import { ingredients } from '@/data/ingredients'
+import { v4 as uuidv4 } from 'uuid'
 import RecipeImage from '@/components/RecipeImage/RecipeImage'
 import IngredientsSelector from '@/components/IngredientsSelector/IngredientsSelector'
 import FormButton from '@/components/FormButton/FormButton'
@@ -14,12 +15,11 @@ export default function CreateRecipeForm() {
     description: null,
     picture: null,
     duration: null,
-    ingredients: [
-      {
-        name: null,
-        amount: null,
-      }
-    ],
+    ingredients: [{
+      name: null,
+      amount: null,
+      id: uuidv4(),
+    }],
     public: false,
   })
   const [formErrors, setFormErrors] = useState()
@@ -135,12 +135,13 @@ export default function CreateRecipeForm() {
         Ингредиенты
       </label>
       <div className={styles.ingredients}>
-        {formValues.ingredients.map((ingredient) => (
+        {formValues.ingredients.map((ingredient, index) => (
           <IngredientsSelector
           options={ingredients}
           handleChange={setFormValues}
-          key={formValues.ingredients.indexOf(ingredient)}
-          index={formValues.ingredients.indexOf(ingredient)}
+          key={ingredient.id}
+          id={ingredient.id}
+          showRemoveIcon={index != 0}
           />
         ))}
         <button
@@ -150,7 +151,7 @@ export default function CreateRecipeForm() {
             ...prev,
             ingredients: [
               ...prev.ingredients,
-              { name: null, amount: null }
+              { name: null, amount: null, id: uuidv4() }
             ]
           }))}
         >

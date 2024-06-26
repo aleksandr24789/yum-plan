@@ -5,12 +5,13 @@ import styles from './IngredientsSelector.module.css'
 export default function IngredientsSelector({
   options,
   handleChange,
-  index
+  id,
+  showRemoveIcon
 }) {
   const [query, setQuery] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [selectedVal, setSelectedVal] = useState(null)
-  const [amount, setAmount] = useState(0)
+  const [amount, setAmount] = useState(10)
   const inputRef = useRef(null)
 
   useEffect(() => {
@@ -29,8 +30,8 @@ export default function IngredientsSelector({
     setSelectedVal(option)
     handleChange(prev => ({
       ...prev,
-      ingredients: [...prev.ingredients.map((ing, i) => {
-        if (i === index) return { name: option, amount: amount }
+      ingredients: [...prev.ingredients.map((ing) => {
+        if (ing.id === id) return { ...ing, name: option }
         return ing
       })]
     }))
@@ -45,7 +46,7 @@ export default function IngredientsSelector({
     return options.filter(
       (option) => option
         .toLowerCase()
-        .indexOf(query.toLowerCase()) > -1
+        .includes(query.toLowerCase())
     )
   }
 
@@ -90,7 +91,7 @@ export default function IngredientsSelector({
           type="number"
           min="10"
           max="1000"
-          placeholder="100"
+          value={amount}
           required
           name="amount"
           className={styles.number}
@@ -98,8 +99,8 @@ export default function IngredientsSelector({
             setAmount(Number(e.target.value))
             handleChange(prev => ({
               ...prev,
-              ingredients: [...prev.ingredients.map((ing, i) => {
-                if (i === index) return { name: ing.name, amount: amount }
+              ingredients: [...prev.ingredients.map((ing) => {
+                if (ing.id === id) return { ...ing, amount: Number(e.target.value) }
                 return ing
               })]
             }))
@@ -108,13 +109,13 @@ export default function IngredientsSelector({
         <span className={styles.text}>грамм</span>
       </div>
       <div className={styles.delete}>
-        {index !== 0 && <button
+        {showRemoveIcon && <button
           type="button"
           title="Удалить ингредиент"
           className={styles.button}
           onClick={() => handleChange(prev => ({
             ...prev,
-            ingredients: [...prev.ingredients.filter((item, i) => i !== index)]
+            ingredients: [...prev.ingredients.filter((ing) => ing.id !== id)]
           }))}
         />}
       </div>
