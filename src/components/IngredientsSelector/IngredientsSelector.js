@@ -11,7 +11,7 @@ export default function IngredientsSelector({
   const [query, setQuery] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [selectedVal, setSelectedVal] = useState(null)
-  const [amount, setAmount] = useState(10)
+  const [amount, setAmount] = useState(0)
   const inputRef = useRef(null)
 
   useEffect(() => {
@@ -62,7 +62,7 @@ export default function IngredientsSelector({
             name="searchTerm"
             onChange={(e) => {
               setQuery(e.target.value)
-              handleChange(null)
+              setSelectedVal(null)
             }}
             onClick={toggle}
           />

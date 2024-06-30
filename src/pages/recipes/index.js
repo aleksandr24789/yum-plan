@@ -14,7 +14,7 @@ export default function Recipes() {
         button
         href="/recipes/create"
       >
-        Создать рецепт &#43;
+        Создать рецепт
       </NavButton>
     </MainLayout>
   )

@@ -14,10 +14,10 @@ export default function CreateRecipeForm() {
     name: null,
     description: null,
     picture: null,
-    duration: null,
+    duration: 0,
     ingredients: [{
-      name: null,
-      amount: null,
+      name: '1',
+      amount: 0,
       id: uuidv4(),
     }],
     public: false,
@@ -40,6 +40,18 @@ export default function CreateRecipeForm() {
       duration: z.number()
         .min(10, 'Продолжительность должна быть не менее 10 минут')
         .max(180, 'Продолжительность должна быть не более 180 минут')
+      ,
+      ingredients: z.array(
+        z.object({
+          amount: z.number()
+            .min(10, 'Количество должно быть не менее 10 граммов')
+            .max(30, 'Количество должно быть не более 1000 граммов')
+          ,
+          name: z.string()
+            .min(2, 'Выберите не менее одного ингредиента')
+          ,
+        })
+      )
     }).safeParse(formValues)
 
     if(result.success) {
@@ -134,7 +146,10 @@ export default function CreateRecipeForm() {
       >
         Ингредиенты
       </label>
-      <div className={styles.ingredients}>
+      <div
+        className={cl(styles.ingredients,
+          formErrors?.ingredients && styles.error)}
+      >
         {formValues.ingredients.map((ingredient, index) => (
           <IngredientsSelector
           options={ingredients}
@@ -158,6 +173,7 @@ export default function CreateRecipeForm() {
           Добавить ингредиент
         </button>
       </div>
+      <span className={styles.hint}>{formErrors?.ingredients}</span>
       <label
         htmlFor="public"
         className={styles.label}

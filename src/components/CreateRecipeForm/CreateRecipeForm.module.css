@@ -72,9 +72,14 @@
 
 .ingredients {
   grid-column: 2 / 2;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.ingredients.error {
+  border: 1px dotted darkred;
 }
 
 .more {
