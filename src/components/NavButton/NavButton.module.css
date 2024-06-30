@@ -8,15 +8,16 @@
   cursor: pointer;
 	outline: none;
 	font-size: 1rem;
+	font-weight: 500;
 	vertical-align: middle;
 	color: rgb(255 255 255);
 	text-align: center;
 	border-radius: 4px;
 	border: none;
-  background-color: var(--brand-color-3);
+  background-color: #bb3b3b;
 	padding: 10px 5px;
 }
 
 .button:hover {
-  background-color: #ab9b9ed8;
+  filter: brightness(1.2);
 }

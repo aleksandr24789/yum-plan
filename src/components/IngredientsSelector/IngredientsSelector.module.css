@@ -1,0 +1,122 @@
+.container {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.selector {
+  flex-basis: 70%;
+  position: relative;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.arrow {
+  position: absolute;
+  right: 10px;
+  top: 14px;
+  content: " ";
+  display: block;
+  width: 0;
+  height: 0;
+  margin-top: 5px;
+  border-color: var(--brand-color-4) transparent transparent;
+  border-style: solid;
+  border-width: 5px 5px 0;
+}
+
+.arrow.open {
+  border-color: transparent transparent var(--brand-color-4);
+  border-width: 0 5px 5px;
+}
+
+.input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 52px 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--brand-color-4);
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+  transition: all 200ms ease;
+}
+
+.options {
+  display: none;
+  z-index: 1000;
+  position: absolute;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid var(--brand-color-4);
+  top: 76%;
+  width: 100%;
+  margin-top: -1px;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #fff;
+}
+
+.options.open {
+  display: block;
+}
+
+.option {
+  display: block;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.option.selected,
+.option:hover {
+  background-color: var(--brand-color-3);
+  color: #fff;
+}
+
+.amount {
+  flex-basis: 25%;
+  justify-self: right;
+}
+
+.number {
+  outline: none;
+  width: 80px;
+  margin-right: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--brand-color-4);
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--primary-text-color);
+}
+
+.text {
+  color: var(--primary-text-color);
+}
+
+.delete {
+  flex-basis: 5%;
+  place-content: center;
+}
+
+.button {
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-image: url('/icons/delete.svg');
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  transition: all 200ms ease;
+}
+
+.button:hover {
+  filter: brightness(120%);
+}

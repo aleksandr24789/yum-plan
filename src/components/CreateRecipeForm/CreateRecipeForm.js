@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import { z } from 'zod'
+import { ingredients } from '@/data/ingredients'
+import { v4 as uuidv4 } from 'uuid'
 import RecipeImage from '@/components/RecipeImage/RecipeImage'
+import IngredientsSelector from '@/components/IngredientsSelector/IngredientsSelector'
 import FormButton from '@/components/FormButton/FormButton'
+import cl from 'classnames'
 import styles from './CreateRecipeForm.module.css'
 
 export default function CreateRecipeForm() {
@@ -10,8 +14,12 @@ export default function CreateRecipeForm() {
     name: null,
     description: null,
     picture: null,
-    duration: null,
-    ingredients: [],
+    duration: 0,
+    ingredients: [{
+      name: '1',
+      amount: 0,
+      id: uuidv4(),
+    }],
     public: false,
   })
   const [formErrors, setFormErrors] = useState()
@@ -26,12 +34,24 @@ export default function CreateRecipeForm() {
 
     const result = z.object({
       name: z.string()
-        .min(1, 'Название должно содержать не менее одного символа')
+        .min(2, 'Название должно содержать не менее двух символов')
         .max(50, 'Название должно содержать не более 50 символов')
       ,
       duration: z.number()
         .min(10, 'Продолжительность должна быть не менее 10 минут')
         .max(180, 'Продолжительность должна быть не более 180 минут')
+      ,
+      ingredients: z.array(
+        z.object({
+          amount: z.number()
+            .min(10, 'Количество должно быть не менее 10 граммов')
+            .max(30, 'Количество должно быть не более 1000 граммов')
+          ,
+          name: z.string()
+            .min(2, 'Выберите не менее одного ингредиента')
+          ,
+        })
+      )
     }).safeParse(formValues)
 
     if(result.success) {
@@ -59,6 +79,7 @@ export default function CreateRecipeForm() {
     >
       <label
         htmlFor="name"
+        className={styles.label}
       >
         Название
       </label>
@@ -71,11 +92,12 @@ export default function CreateRecipeForm() {
           ...prev,
           name: e.target.value
         }))}
-        className={formErrors?.name && styles.error}
+        className={cl(styles.input, formErrors?.name && styles.error)}
       />
-      <span>{formErrors?.name}</span>
+      <span className={styles.hint}>{formErrors?.name}</span>
       <label
         htmlFor="description"
+        className={styles.label}
       >
         Описание
       </label>
@@ -87,15 +109,18 @@ export default function CreateRecipeForm() {
           ...prev,
           description: e.target.value
         }))}
+        className={styles.textarea}
       />
       <label
         htmlFor="picture"
+        className={styles.label}
       >
         Изображение
       </label>
       <RecipeImage onChange={setFormValues} />
       <label
         htmlFor="duration"
+        className={styles.label}
       >
         Время (минуты)
       </label>
@@ -110,30 +135,48 @@ export default function CreateRecipeForm() {
           ...prev,
           duration: Number(e.target.value)
         }))}
-        className={formErrors?.duration && styles.error}
+        className={cl(styles.input,
+          styles.number,
+          formErrors?.duration && styles.error)}
       />
-      <span>{formErrors?.duration}</span>
+      <span className={styles.hint}>{formErrors?.duration}</span>
       <label
         htmlFor="ingredients"
+        className={styles.label}
       >
         Ингредиенты
       </label>
-      <select
-        name="ingredients"
-        multiple
-        onChange={(e) => setFormValues(prev => ({
-          ...prev,
-          ingredients: Array.from(e.target.selectedOptions)
-                      .map(option => option.text)
-        }))}
+      <div
+        className={cl(styles.ingredients,
+          formErrors?.ingredients && styles.error)}
       >
-        {/* TO DO: Get options from database */}
-        <option value={'val1'}>1 морковка</option>
-        <option value={'val2'}>2 капуста</option>
-        <option value={'val3'}>3 свекла</option>
-      </select>
+        {formValues.ingredients.map((ingredient, index) => (
+          <IngredientsSelector
+          options={ingredients}
+          handleChange={setFormValues}
+          key={ingredient.id}
+          id={ingredient.id}
+          showRemoveIcon={index != 0}
+          />
+        ))}
+        <button
+          type="button"
+          className={styles.more}
+          onClick={() => setFormValues((prev) => ({
+            ...prev,
+            ingredients: [
+              ...prev.ingredients,
+              { name: null, amount: null, id: uuidv4() }
+            ]
+          }))}
+        >
+          Добавить ингредиент
+        </button>
+      </div>
+      <span className={styles.hint}>{formErrors?.ingredients}</span>
       <label
         htmlFor="public"
+        className={styles.label}
       >
         Доступен для всех
       </label>
@@ -144,10 +187,12 @@ export default function CreateRecipeForm() {
           ...prev,
           public: e.target.checked
         }))}
+        className={cl(styles.input, styles.checkbox)}
       />
       <FormButton
         caption="Добавить"
         loading={buttonLoading}
+        className={styles.submit}
       />       
     </form>
   )

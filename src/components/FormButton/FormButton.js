@@ -1,10 +1,11 @@
+import cl from 'classnames'
 import styles from './FormButton.module.css'
 
-export default function FormButton({ caption, loading }) {
+export default function FormButton({ caption, loading, className }) {
   return (
     <button
       type="submit"
-      className={styles.button}
+      className={cl(styles.button, className)}
       disabled={loading}
     >
       {!loading && caption}
