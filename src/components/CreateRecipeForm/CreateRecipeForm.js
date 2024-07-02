@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { ingredients } from '@/data/ingredients'
 import { v4 as uuidv4 } from 'uuid'
 import RecipeImage from '@/components/RecipeImage/RecipeImage'
+import { defaultPicture } from '@/data/defaultRecipePicture'
 import IngredientsSelector from '@/components/IngredientsSelector/IngredientsSelector'
 import FormButton from '@/components/FormButton/FormButton'
 import cl from 'classnames'
@@ -13,7 +14,7 @@ export default function CreateRecipeForm() {
   const [formValues, setFormValues] = useState({
     name: null,
     description: null,
-    picture: null,
+    picture: defaultPicture,
     duration: 0,
     ingredients: [{
       name: '1',
@@ -117,7 +118,7 @@ export default function CreateRecipeForm() {
       >
         Изображение
       </label>
-      <RecipeImage onChange={setFormValues} />
+      <RecipeImage handleChange={setFormValues} />
       <label
         htmlFor="duration"
         className={styles.label}

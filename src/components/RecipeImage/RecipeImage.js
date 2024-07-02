@@ -4,7 +4,7 @@ import defaultPicture from 'public/images/default-recipe-picture.jpg'
 import { toBase64, resizeImage } from '@/helpers/images'
 import styles from './RecipeImage.module.css'
 
-export default function RecipeImage(props) {
+export default function RecipeImage({ handleChange }) {
   const [picture, setPicture] = useState(null)
   const [loader, setLoader] = useState(false)
 
@@ -14,9 +14,9 @@ export default function RecipeImage(props) {
       const file = await toBase64(e.target.files[0])
       const newPicture = await resizeImage(file, 130, 130)
       setPicture(newPicture)
-      props.onChange(prev => ({
+      handleChange(prev => ({
         ...prev,
-        picture
+        picture: newPicture
       }))
     } catch(error) {
       console.error(error)
