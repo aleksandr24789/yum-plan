@@ -61,6 +61,15 @@ export default function CreateRecipeForm() {
         setButtonLoading(false)
       }, 2000)
       // TO DO: Adding to database
+      // const response = await fetch('/api/changeuser', {
+      //   method: 'POST',
+      //   body: JSON.stringify(data),
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   }
+      // })
+      // const json = await response.json()
+      // setMessage(json.message)
     }
     else {
       for (const error of result.error.issues) {
