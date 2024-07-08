@@ -59,21 +59,12 @@ model VerificationToken {
 model Recipes {
   id          String        @id @default(cuid())
   name        String
-  image       String
+  picture     String
   description String?
   duration    Int
-  ingredients Ingredients[]
-  public      Boolean
-  creator     User          @relation(fields: [creatorId], references: [id])
+  ingredients Json
+  forPublic   Boolean
   creatorId   String        @map("creator_id")
-  date        DateTime
-}
-
-model Ingredients {
-  id        String   @id @default(cuid())
-  name      String
-  amount    Float
-  unit      String
-  Recipes   Recipes? @relation(fields: [recipesId], references: [id])
-  recipesId String?
+  creator     User          @relation(fields: [creatorId], references: [id])
+  date        DateTime      @default(now())
 }

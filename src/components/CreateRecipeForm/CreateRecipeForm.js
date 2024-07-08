@@ -21,7 +21,7 @@ export default function CreateRecipeForm() {
       amount: 0,
       id: uuidv4(),
     }],
-    public: false,
+    forPublic: false,
   })
   const [formErrors, setFormErrors] = useState()
 
@@ -56,20 +56,16 @@ export default function CreateRecipeForm() {
     }).safeParse(formValues)
 
     if(result.success) {
-      setTimeout(() => {
-        console.log('Receipe created:', formValues)
-        setButtonLoading(false)
-      }, 2000)
-      // TO DO: Adding to database
-      // const response = await fetch('/api/changeuser', {
-      //   method: 'POST',
-      //   body: JSON.stringify(data),
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   }
-      // })
-      // const json = await response.json()
-      // setMessage(json.message)
+      const response = await fetch('/api/createrecipe', {
+        method: 'POST',
+        body: JSON.stringify(formValues),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const json = await response.json()
+      console.log(json.message)
+      setButtonLoading(false)
     }
     else {
       for (const error of result.error.issues) {
@@ -185,17 +181,17 @@ export default function CreateRecipeForm() {
       </div>
       <span className={styles.hint}>{formErrors?.ingredients}</span>
       <label
-        htmlFor="public"
+        htmlFor="forPublic"
         className={styles.label}
       >
         Доступен для всех
       </label>
       <input
         type="checkbox"
-        name="public"
+        name="forPublic"
         onChange={(e) => setFormValues(prev => ({
           ...prev,
-          public: e.target.checked
+          forPublic: e.target.checked
         }))}
         className={cl(styles.input, styles.checkbox)}
       />
